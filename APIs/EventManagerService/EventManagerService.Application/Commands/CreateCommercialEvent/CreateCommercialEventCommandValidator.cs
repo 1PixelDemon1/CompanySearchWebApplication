@@ -36,6 +36,7 @@ namespace EventManagerService.Application.Commands.CreateCommercialEvent
                 });
             RuleFor(command => command.EventDateTime).GreaterThanOrEqualTo(DateTime.UtcNow);
             RuleFor(command => command.Price).GreaterThanOrEqualTo(0);
+            RuleFor(command => (int)command.GenderRules).GreaterThanOrEqualTo(0).LessThanOrEqualTo(2);
         }
     }
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EventManagerService.Application.Queries.GetUserEventsSigned
 {
-    public class GetUserEventsSignedQuery : IRequest<IEnumerable<BaseEvent>?>
+    public class GetUserEventsSignedQuery : IRequest<IEnumerable<UserEvent>?>
     {
         public int UserId { get; set; }
     }

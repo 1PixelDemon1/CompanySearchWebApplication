@@ -11,12 +11,12 @@ namespace EventManagerService.Infrastructure.Repository
 
         public override EventCategory Get(Func<EventCategory, bool> filter)
         {
-            return dbSet.Include(e => e.Events).FirstOrDefault(filter);
+            return dbSet.Include(e => e.Events).Include(e => e.ChildCategories).FirstOrDefault(filter);
         }
 
         public override IEnumerable<EventCategory> Where(Func<EventCategory, bool> filter)
         {
-            return dbSet.Include(e => e.Events).Where(filter);
+            return dbSet.Include(e => e.Events).Include(e => e.ChildCategories).Where(filter);
         }
     }
 }

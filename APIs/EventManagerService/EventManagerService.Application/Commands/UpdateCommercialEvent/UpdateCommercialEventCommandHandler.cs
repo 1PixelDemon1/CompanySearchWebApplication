@@ -23,7 +23,7 @@ namespace EventManagerService.Application.Commands.UpdateCommercialEvent
                 throw new EventNotFoundException(request.Id);
             }
 
-            commercialEvent.Creator = _unitOfWork.Users.Get(u => u.Id == request.CreatorId);
+            commercialEvent.Creator = _unitOfWork.CommercialUsers.Get(u => u.Id == request.CreatorId);
             commercialEvent.UpdateTime = DateTime.UtcNow;
             commercialEvent.EventDuration = request.EventDuration;
             commercialEvent.EventDateTime = request.EventDateTime;
@@ -37,8 +37,8 @@ namespace EventManagerService.Application.Commands.UpdateCommercialEvent
             commercialEvent.MaxAge = request.MaxAge;
             commercialEvent.Price = request.Price;
 
-            commercialEvent.Categories = (request.CategoryIds is not null) ? _unitOfWork.Categories.Where(c => request.CategoryIds.Contains(c.Id)) : null;
-            commercialEvent.CommercialEvents = (request.CommercialEventIds is not null) ? _unitOfWork.CommercialEvents.Where(e => request.CommercialEventIds.Contains(e.Id)) : null;
+            commercialEvent.Categories = (request.CategoryIds is not null) ? _unitOfWork.Categories.Where(c => request.CategoryIds.Contains(c.Id)).ToList() : null;
+            commercialEvent.CommercialEvents = (request.CommercialEventIds is not null) ? _unitOfWork.CommercialEvents.Where(e => request.CommercialEventIds.Contains(e.Id)).ToList() : null;
 
             _unitOfWork.SaveChanges();
         }

@@ -186,7 +186,7 @@ namespace EventManagerService.Infrastructure.Migrations
                     b.Property<int?>("CommercialEventId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("CommercialUserId")
+                    b.Property<int?>("CreatorId")
                         .HasColumnType("integer");
 
                     b.Property<decimal>("Price")
@@ -197,7 +197,7 @@ namespace EventManagerService.Infrastructure.Migrations
 
                     b.HasIndex("CommercialEventId");
 
-                    b.HasIndex("CommercialUserId");
+                    b.HasIndex("CreatorId");
 
                     b.HasIndex("UserEventId");
 
@@ -208,15 +208,15 @@ namespace EventManagerService.Infrastructure.Migrations
                 {
                     b.HasBaseType("EventManagerService.Domain.Entities.BaseEntities.BaseEvent");
 
+                    b.Property<int?>("CreatorId")
+                        .HasColumnType("integer");
+
                     b.Property<int?>("UserEventId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("integer");
+                    b.HasIndex("CreatorId");
 
                     b.HasIndex("UserEventId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("UserEvents", (string)null);
                 });
@@ -254,7 +254,7 @@ namespace EventManagerService.Infrastructure.Migrations
             modelBuilder.Entity("EventManagerService.Domain.Entities.EventCategory", b =>
                 {
                     b.HasOne("EventManagerService.Domain.Entities.EventCategory", "ParentCategory")
-                        .WithMany()
+                        .WithMany("ChildCategories")
                         .HasForeignKey("ParentCategoryId");
 
                     b.Navigation("ParentCategory");
@@ -266,9 +266,9 @@ namespace EventManagerService.Infrastructure.Migrations
                         .WithMany("CommercialEvents")
                         .HasForeignKey("CommercialEventId");
 
-                    b.HasOne("EventManagerService.Domain.Entities.CommercialUser", null)
+                    b.HasOne("EventManagerService.Domain.Entities.CommercialUser", "Creator")
                         .WithMany("CommercialEvents")
-                        .HasForeignKey("CommercialUserId");
+                        .HasForeignKey("CreatorId");
 
                     b.HasOne("EventManagerService.Domain.Entities.BaseEntities.BaseEvent", null)
                         .WithOne()
@@ -279,10 +279,16 @@ namespace EventManagerService.Infrastructure.Migrations
                     b.HasOne("EventManagerService.Domain.Entities.UserEvent", null)
                         .WithMany("CommercialEvents")
                         .HasForeignKey("UserEventId");
+
+                    b.Navigation("Creator");
                 });
 
             modelBuilder.Entity("EventManagerService.Domain.Entities.UserEvent", b =>
                 {
+                    b.HasOne("EventManagerService.Domain.Entities.User", "Creator")
+                        .WithMany("UserEvents")
+                        .HasForeignKey("CreatorId");
+
                     b.HasOne("EventManagerService.Domain.Entities.BaseEntities.BaseEvent", null)
                         .WithOne()
                         .HasForeignKey("EventManagerService.Domain.Entities.UserEvent", "Id")
@@ -293,14 +299,17 @@ namespace EventManagerService.Infrastructure.Migrations
                         .WithMany("UserEvents")
                         .HasForeignKey("UserEventId");
 
-                    b.HasOne("EventManagerService.Domain.Entities.User", null)
-                        .WithMany("UserEvents")
-                        .HasForeignKey("UserId");
+                    b.Navigation("Creator");
                 });
 
             modelBuilder.Entity("EventManagerService.Domain.Entities.CommercialUser", b =>
                 {
                     b.Navigation("CommercialEvents");
+                });
+
+            modelBuilder.Entity("EventManagerService.Domain.Entities.EventCategory", b =>
+                {
+                    b.Navigation("ChildCategories");
                 });
 
             modelBuilder.Entity("EventManagerService.Domain.Entities.User", b =>

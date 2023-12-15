@@ -29,7 +29,7 @@ namespace EventManagerService.Application.Commands.UpdateCommercialUser
             }
             user.Name = request.Name;
             user.PersonalAccount = request.PersonalAccount;
-            user.CommercialEvents = (request.CommercialEventIds is not null) ? _unitOfWork.CommercialEvents.Where(u => request.CommercialEventIds.Contains(u.Id)) : null;
+            user.CommercialEvents = (request.CommercialEventIds is not null) ? _unitOfWork.CommercialEvents.Where(u => request.CommercialEventIds.Contains(u.Id)).ToList() : null;
             _unitOfWork.SaveChanges();
         }
     }

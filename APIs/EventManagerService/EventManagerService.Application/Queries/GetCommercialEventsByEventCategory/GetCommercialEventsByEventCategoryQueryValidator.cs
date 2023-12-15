@@ -1,0 +1,12 @@
+﻿using FluentValidation;
+
+namespace EventManagerService.Application.Queries.GetCommercialEventsByEventCategory
+{
+    public class GetCommercialEventsByEventCategoryQueryValidator : AbstractValidator<GetCommercialEventsByEventCategoryQuery>
+    {
+        public GetCommercialEventsByEventCategoryQueryValidator()
+        {
+            RuleFor(command => command.EventCategoryId).GreaterThan(0);
+        }
+    }
+}

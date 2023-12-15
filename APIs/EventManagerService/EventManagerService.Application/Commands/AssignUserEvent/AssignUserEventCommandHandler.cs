@@ -1,4 +1,4 @@
-﻿using EventManagerService.Application.Commands.AssignUser;
+﻿using EventManagerService.Application.Commands.AssignUserCommercialEvent;
 using EventManagerService.Application.Common.CustomExceptions;
 using EventManagerService.Application.Interfaces;
 using EventManagerService.Domain.Entities;
@@ -56,7 +56,7 @@ namespace EventManagerService.Application.Commands.AssignUserEvent
                 throw new UserNotMetRequirementsException("female only");
             }
 
-            if (userEvent.RegisteredUsers is null)
+            if (userEvent.RegisteredUsers is null || userEvent.RegisteredUsers.Count() == 0)
             {
                 userEvent.RegisteredUsers = new List<User>() { user };
             }
@@ -67,7 +67,7 @@ namespace EventManagerService.Application.Commands.AssignUserEvent
                     throw new UserAlreadySignedException(user.Id, userEvent.Id);
                 }
 
-                userEvent.RegisteredUsers.Append(user);
+                (userEvent.RegisteredUsers as ICollection<User>)?.Add(user);
             }
             _unitOfWork.SaveChanges();
         }

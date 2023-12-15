@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace EventManagerService.Application.Commands.AssignUser
+namespace EventManagerService.Application.Commands.AssignUserCommercialEvent
 {
     public class AssignUserCommercialEventCommand : IRequest
     {

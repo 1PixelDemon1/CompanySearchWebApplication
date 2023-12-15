@@ -4,7 +4,7 @@ using EventManagerService.Domain.Entities;
 using FluentValidation;
 using MediatR;
 
-namespace EventManagerService.Application.Commands.AssignUser
+namespace EventManagerService.Application.Commands.AssignUserCommercialEvent
 {
     public class AssignUserCommercialEventCommandHandler : IRequestHandler<AssignUserCommercialEventCommand>
     {
@@ -61,7 +61,7 @@ namespace EventManagerService.Application.Commands.AssignUser
                 {                    
                     throw new UserAlreadySignedException(user.Id, commercialEvent.Id);
                 }
-                commercialEvent.RegisteredUsers.Append(user);
+                (commercialEvent.RegisteredUsers as ICollection<User>).Add(user);
             }
             _unitOfWork.SaveChanges();
         }

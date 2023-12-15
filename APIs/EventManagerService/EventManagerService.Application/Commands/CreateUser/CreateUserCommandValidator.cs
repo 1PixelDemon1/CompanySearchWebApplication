@@ -13,6 +13,7 @@ namespace EventManagerService.Application.Commands.CreateUser
         {
             RuleFor(command => command.Name).NotNull().NotEmpty();
             RuleFor(command => command.Age).GreaterThanOrEqualTo(0);
+            RuleFor(command => (int) command.Gender).GreaterThanOrEqualTo(0).LessThanOrEqualTo(1);
         }
     }
 }

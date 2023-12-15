@@ -15,12 +15,18 @@ namespace EventManagerService.Infrastructure.Repository
 
         public override CommercialEvent Get(Func<CommercialEvent, bool> filter)
         {
-            return dbSet.Include(e => e.RegisteredUsers).FirstOrDefault(filter);
+            return dbSet.Include(e => e.RegisteredUsers)
+                .Include(e => e.Creator)
+                .Include(e => e.Categories)
+                .FirstOrDefault(filter);
         }
 
         public override IEnumerable<CommercialEvent> Where(Func<CommercialEvent, bool> filter)
         {
-            return dbSet.Include(e => e.RegisteredUsers).Where(filter);
+            return dbSet.Include(e => e.RegisteredUsers)
+                .Include(e => e.Creator)
+                .Include(e => e.Categories)
+                .Where(filter);
         }
     }
 }

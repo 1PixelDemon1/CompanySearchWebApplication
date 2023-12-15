@@ -24,8 +24,10 @@ namespace EventManagerService.Application.Commands.UpdateUser
             user.PhoneNumber = request.PhoneNumber;
             user.Name = request.Name;
             user.Email = request.Email;
-            user.UserEvents = (request.UserEventIds is not null) ? _unitOfWork.UserEvents.Where(u => request.UserEventIds.Contains(u.Id)) : null;
-            user.SignedEvents = (request.SignedEventIds is not null) ? _unitOfWork.UserEvents.Where(u => request.SignedEventIds.Contains(u.Id)) : null;
+            user.Age = request.Age;
+            user.Gender = request.Gender;
+            user.UserEvents = (request.UserEventIds is not null) ? _unitOfWork.UserEvents.Where(u => request.UserEventIds.Contains(u.Id)).ToList() : null;
+            user.SignedEvents = (request.SignedEventIds is not null) ? _unitOfWork.UserEvents.Where(u => request.SignedEventIds.Contains(u.Id)).ToList() : null;
             _unitOfWork.SaveChanges();
         }
     }

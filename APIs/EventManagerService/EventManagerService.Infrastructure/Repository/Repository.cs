@@ -1,4 +1,5 @@
 ﻿using EventManagerService.Application.Interfaces;
+using EventManagerService.Domain.Entities;
 using EventManagerService.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -32,7 +33,6 @@ namespace EventManagerService.Infrastructure.Repository
         {
             await dbSet.AddAsync(entity);
         }
-
         public virtual T Get(Func<T, bool> filter)
         {
             return dbSet.FirstOrDefault(filter);

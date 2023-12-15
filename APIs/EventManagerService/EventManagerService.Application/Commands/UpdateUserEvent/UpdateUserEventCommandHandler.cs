@@ -37,9 +37,9 @@ namespace EventManagerService.Application.Commands.UpdateUserEvent
             userEvent.MinAge = request.MinAge;
             userEvent.MaxAge = request.MaxAge;
             
-            userEvent.Categories = (request.CategoryIds is not null) ? _unitOfWork.Categories.Where(c => request.CategoryIds.Contains(c.Id)) : null;
-            userEvent.UserEvents = (request.UserEventIds is not null) ? _unitOfWork.UserEvents.Where(e => request.UserEventIds.Contains(e.Id)) : null;
-            userEvent.CommercialEvents = (request.CommercialEventIds is not null) ? _unitOfWork.CommercialEvents.Where(e => request.CommercialEventIds.Contains(e.Id)) : null;
+            userEvent.Categories = (request.CategoryIds is not null) ? _unitOfWork.Categories.Where(c => request.CategoryIds.Contains(c.Id)).ToList() : null;
+            userEvent.UserEvents = (request.UserEventIds is not null) ? _unitOfWork.UserEvents.Where(e => request.UserEventIds.Contains(e.Id)).ToList() : null;
+            userEvent.CommercialEvents = (request.CommercialEventIds is not null) ? _unitOfWork.CommercialEvents.Where(e => request.CommercialEventIds.Contains(e.Id)).ToList() : null;
 
             _unitOfWork.SaveChanges();
         }

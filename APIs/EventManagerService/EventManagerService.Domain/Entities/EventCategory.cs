@@ -13,5 +13,6 @@ namespace EventManagerService.Domain.Entities
         public string Name { get; set; }
         public IEnumerable<BaseEvent>? Events { get; set; }
         public EventCategory? ParentCategory{ get; set; }
+        public IEnumerable<EventCategory>? ChildCategories{ get; set; }
     }
 }

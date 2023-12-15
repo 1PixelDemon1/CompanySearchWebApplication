@@ -17,4 +17,9 @@
     <ProjectReference Include="..\EventManagerService.Domain\EventManagerService.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Commands\AssignEventCategoryUserEvent\" />
+    <Folder Include="Commands\AssignEventCategoryCommercialEvent\" />
+  </ItemGroup>
+
 </Project>

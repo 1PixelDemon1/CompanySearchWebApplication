@@ -6,7 +6,7 @@ using MediatR;
 
 namespace EventManagerService.Application.Queries.GetUserEventsSigned
 {
-    public class GetUserEventsSignedQueryHandler : IRequestHandler<GetUserEventsSignedQuery, IEnumerable<BaseEvent>?>
+    public class GetUserEventsSignedQueryHandler : IRequestHandler<GetUserEventsSignedQuery, IEnumerable<UserEvent>?>
     {
 
         private readonly IUnitOfWork _unitOfWork;
@@ -16,14 +16,14 @@ namespace EventManagerService.Application.Queries.GetUserEventsSigned
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IEnumerable<BaseEvent>?> Handle(GetUserEventsSignedQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<UserEvent>?> Handle(GetUserEventsSignedQuery request, CancellationToken cancellationToken)
         {
             User user = _unitOfWork.Users.Get(u => u.Id == request.UserId);
             if(user is null)
             {
                 throw new UserNotFoundException(request.UserId);
             }
-            return user.SignedEvents;
+            return user.SignedEvents.Where(e => e is UserEvent).Select(e => e as UserEvent);
         }
     }
 }

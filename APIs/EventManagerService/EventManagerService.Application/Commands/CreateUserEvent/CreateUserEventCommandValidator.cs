@@ -31,6 +31,7 @@ namespace EventManagerService.Application.Commands.CreateUserEvent
                     }
                 });
             RuleFor(command => command.EventDateTime).GreaterThanOrEqualTo(DateTime.UtcNow);
+            RuleFor(command => (int)command.GenderRules).GreaterThanOrEqualTo(0).LessThanOrEqualTo(2);
         }
     }
 }

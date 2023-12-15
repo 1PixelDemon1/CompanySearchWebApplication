@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace EventManagerService.Application.Commands.RemoveUser
 {
-    public class RemoveCommercialUserCommandValidator : AbstractValidator<RemoveCommercialUserCommand>
+    public class RemoveUserCommandValidator : AbstractValidator<RemoveUserCommand>
     {
-        public RemoveCommercialUserCommandValidator()
+        public RemoveUserCommandValidator()
         {
             RuleFor(command => command.Id).GreaterThan(0);            
         }

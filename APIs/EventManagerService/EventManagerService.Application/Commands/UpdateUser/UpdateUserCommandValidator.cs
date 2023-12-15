@@ -13,6 +13,8 @@ namespace EventManagerService.Application.Commands.UpdateUser
         {
             RuleFor(command => command.Id).GreaterThan(0);
             RuleFor(command => command.Name).NotNull().NotEmpty();
+            RuleFor(command => command.Age).GreaterThanOrEqualTo(0);
+            RuleFor(command => (int)command.Gender).GreaterThanOrEqualTo(0).LessThanOrEqualTo(1);
         }
     }
 }

@@ -19,12 +19,12 @@ namespace EventManagerService.Application.Commands.CreateCommercialEvent
         {            
             CommercialEvent commercialEvent = new()
             {
-                Creator = _unitOfWork.Users.Get(u => u.Id == request.CreatorId),
+                Creator = _unitOfWork.CommercialUsers.Get(u => u.Id == request.CreatorId),
                 CreateTime = DateTime.UtcNow,
                 UpdateTime = DateTime.UtcNow,
                 EventDuration = request.EventDuration,
                 EventDateTime = request.EventDateTime,
-                Categories = (request.CategoryIds is not null) ? _unitOfWork.Categories.Where(c => request.CategoryIds.Contains(c.Id)) : null,
+                Categories = (request.CategoryIds is not null) ? _unitOfWork.Categories.Where(c => request.CategoryIds.Contains(c.Id)).ToList() : null,
                 Location = request.Location,
                 DeadLine = request.DeadLine,
                 GenderRules = request.GenderRules,
@@ -34,7 +34,7 @@ namespace EventManagerService.Application.Commands.CreateCommercialEvent
                 MaxAge = request.MaxAge,
                 Description = request.Description,
                 Price = request.Price,
-                CommercialEvents = (request.CommercialEventIds is not null) ? _unitOfWork.CommercialEvents.Where(e => request.CommercialEventIds.Contains(e.Id)) : null
+                CommercialEvents = (request.CommercialEventIds is not null) ? _unitOfWork.CommercialEvents.Where(e => request.CommercialEventIds.Contains(e.Id)).ToList() : null
             };
 
             await _unitOfWork.CommercialEvents.AddAsync(commercialEvent);

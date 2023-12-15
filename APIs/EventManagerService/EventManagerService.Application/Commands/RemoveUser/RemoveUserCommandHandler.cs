@@ -5,7 +5,7 @@ using MediatR;
 
 namespace EventManagerService.Application.Commands.RemoveUser
 {
-    public class RemoveUserCommandHandler : IRequestHandler<RemoveCommercialUserCommand>
+    public class RemoveUserCommandHandler : IRequestHandler<RemoveUserCommand>
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -14,7 +14,7 @@ namespace EventManagerService.Application.Commands.RemoveUser
             _unitOfWork = unitOfWork;
         }
 
-        public async Task Handle(RemoveCommercialUserCommand request, CancellationToken cancellationToken)
+        public async Task Handle(RemoveUserCommand request, CancellationToken cancellationToken)
         {
             User user = _unitOfWork.Users.Get(u => u.Id == request.Id);
             if (user is null)

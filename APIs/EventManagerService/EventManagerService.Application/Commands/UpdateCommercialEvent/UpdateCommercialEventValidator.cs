@@ -30,6 +30,7 @@ namespace EventManagerService.Application.Commands.UpdateCommercialEvent
                     }
                 });
             RuleFor(command => command.EventDateTime).GreaterThanOrEqualTo(DateTime.UtcNow);
+            RuleFor(command => (int)command.GenderRules).GreaterThanOrEqualTo(0).LessThanOrEqualTo(2);
         }
     }
 }

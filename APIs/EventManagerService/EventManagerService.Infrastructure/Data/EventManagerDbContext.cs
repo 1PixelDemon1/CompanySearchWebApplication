@@ -23,6 +23,10 @@ namespace EventManagerService.Infrastructure.Data
             modelBuilder.Entity<UserEvent>().ToTable("UserEvents");
             modelBuilder.Entity<CommercialEvent>().ToTable("CommercialEvents");
 
+            modelBuilder.Entity<UserEvent>().HasOne(ue => ue.Creator).WithMany(u => u.UserEvents);
+            modelBuilder.Entity<CommercialEvent>().HasOne(ce => ce.Creator).WithMany(cu => cu.CommercialEvents);
+            modelBuilder.Entity<EventCategory>().HasMany(c => c.ChildCategories).WithOne(cc => cc.ParentCategory);
+
             modelBuilder.Entity<UserEvent>().Property(e => e.GenderRules).HasConversion<int>();
             modelBuilder.Entity<CommercialEvent>().Property(e => e.GenderRules).HasConversion<int>();
             

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EventManagerService.Application.Commands.RemoveUser
 {
-    public class RemoveCommercialUserCommand : IRequest
+    public class RemoveUserCommand : IRequest
     {
         public int Id { get; set; }
     }

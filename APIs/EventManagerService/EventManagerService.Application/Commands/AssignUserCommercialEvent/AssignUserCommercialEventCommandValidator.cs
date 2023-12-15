@@ -1,4 +1,4 @@
-﻿using EventManagerService.Application.Commands.AssignUser;
+﻿using EventManagerService.Application.Commands.AssignUserCommercialEvent;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
