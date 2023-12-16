@@ -1,0 +1,38 @@
+networks:
+    dev:
+        driver: bridge
+        
+services:
+    event-manager-api:
+        image: docker.io/library/event-manager-api
+        depends_on: 
+            - "app_db"
+        container_name: event-manager-api-services
+        ports:
+            - "80:80"
+        build:
+            context: .
+            dockerfile: Dockerfile
+        environment:
+            - DbConnection=Server=app_db;DataBase=CompanySearch;Integrated Security=true;Port=5432;User Id=postgres;Password=postgres;Pooling=true
+            - ASPNETCORE_URLS=http://+:80
+        networks:
+            - dev
+    app_db:
+        image: postgres:latest
+        container_name: app_db
+        environment:
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=postgres
+            - POSTGRES_DB=CompanySearch
+        ports:
+            - "5433:5432"
+        restart: always
+        volumes:
+            - app_data:/var/lib/postgresql/data
+        networks:
+            - dev
+
+volumes:
+    app_data:
+    
