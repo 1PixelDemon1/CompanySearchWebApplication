@@ -6,7 +6,7 @@ namespace EventManagerService.Application.Queries.GetUserEventsByEventCategory
     {
         public GetUserEventsByEventCategoryQueryValidator()
         {
-            RuleFor(command => command.EventCategoryId).GreaterThan(0);
+            RuleFor(query => query.EventCategoryId).GreaterThan(0);
         }
     }
 }

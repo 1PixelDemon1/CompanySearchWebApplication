@@ -4,10 +4,12 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace EventManagerService.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class InitialMigration_SeedData : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -140,8 +142,8 @@ namespace EventManagerService.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false),
-                    UserEventId = table.Column<int>(type: "integer", nullable: true),
-                    UserId = table.Column<int>(type: "integer", nullable: true)
+                    CreatorId = table.Column<int>(type: "integer", nullable: false),
+                    UserEventId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -158,10 +160,11 @@ namespace EventManagerService.Infrastructure.Migrations
                         principalTable: "UserEvents",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_UserEvents_Users_UserId",
-                        column: x => x.UserId,
+                        name: "FK_UserEvents_Users_CreatorId",
+                        column: x => x.CreatorId,
                         principalTable: "Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -169,9 +172,9 @@ namespace EventManagerService.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false),
+                    CreatorId = table.Column<int>(type: "integer", nullable: false),
                     Price = table.Column<decimal>(type: "numeric", nullable: false),
                     CommercialEventId = table.Column<int>(type: "integer", nullable: true),
-                    CommercialUserId = table.Column<int>(type: "integer", nullable: true),
                     UserEventId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
@@ -189,15 +192,85 @@ namespace EventManagerService.Infrastructure.Migrations
                         principalTable: "CommercialEvents",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_CommercialEvents_CommercialUsers_CommercialUserId",
-                        column: x => x.CommercialUserId,
+                        name: "FK_CommercialEvents_CommercialUsers_CreatorId",
+                        column: x => x.CreatorId,
                         principalTable: "CommercialUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_CommercialEvents_UserEvents_UserEventId",
                         column: x => x.UserEventId,
                         principalTable: "UserEvents",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.InsertData(
+                table: "BaseEvent",
+                columns: new[] { "Id", "CreateTime", "DeadLine", "Description", "EventDateTime", "EventDuration", "GenderRules", "Location", "MaxAge", "MaxUsers", "MinAge", "MinUsers", "UpdateTime" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2023, 12, 16, 20, 46, 23, 120, DateTimeKind.Local).AddTicks(1783), new DateTime(2023, 12, 26, 20, 46, 23, 120, DateTimeKind.Local).AddTicks(1792), "Посещение кинотеатра Джаз.Синема для просмотра фильма \"Человек паук 6\"", new DateTime(2023, 12, 27, 20, 46, 23, 120, DateTimeKind.Local).AddTicks(1797), new TimeSpan(0, 2, 56, 0, 0), 0, "г.Магнитогорск ул.Герцена д.6", -1, 80, 16, 1, new DateTime(2023, 12, 16, 20, 46, 23, 120, DateTimeKind.Local).AddTicks(1792) },
+                    { 2, new DateTime(2023, 12, 16, 20, 46, 23, 120, DateTimeKind.Local).AddTicks(1804), new DateTime(2023, 12, 26, 20, 46, 23, 120, DateTimeKind.Local).AddTicks(1805), "Посещение кинотеатра Джаз.Синема для просмотра фильма \"Человек паук 6\", посещение фестиваля после", new DateTime(2023, 12, 27, 20, 46, 23, 120, DateTimeKind.Local).AddTicks(1806), new TimeSpan(0, 9, 36, 0, 0), 0, "г.Магнитогорск пр.Ленина д.72", -1, 80, 16, 1, new DateTime(2023, 12, 16, 20, 46, 23, 120, DateTimeKind.Local).AddTicks(1805) },
+                    { 3, new DateTime(2023, 12, 16, 20, 46, 23, 120, DateTimeKind.Local).AddTicks(1825), new DateTime(2023, 12, 21, 20, 46, 23, 120, DateTimeKind.Local).AddTicks(1826), "Проведение публичной конференции", new DateTime(2023, 12, 22, 20, 46, 23, 120, DateTimeKind.Local).AddTicks(1826), new TimeSpan(0, 2, 0, 0, 0), 0, "г.Магнитогорск пр.Ленина д.130", -1, -1, 18, 20, new DateTime(2023, 12, 16, 20, 46, 23, 120, DateTimeKind.Local).AddTicks(1825) },
+                    { 4, new DateTime(2023, 12, 16, 20, 46, 23, 120, DateTimeKind.Local).AddTicks(1830), new DateTime(2023, 12, 31, 20, 46, 23, 120, DateTimeKind.Local).AddTicks(1831), "Проведение IT - конференции", new DateTime(2024, 1, 1, 20, 46, 23, 120, DateTimeKind.Local).AddTicks(1831), new TimeSpan(0, 2, 30, 0, 0), 0, "г.Магнитогорск пр.Ленина д.130", -1, -1, 18, 0, new DateTime(2023, 12, 16, 20, 46, 23, 120, DateTimeKind.Local).AddTicks(1830) }
+                });
+
+            migrationBuilder.InsertData(
+                table: "CommercialUsers",
+                columns: new[] { "Id", "Name", "PersonalAccount" },
+                values: new object[,]
+                {
+                    { 5, "VIMers corp", "70ББ000584" },
+                    { 6, "Банк Пеньков", "70ББ000585" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "EventCategories",
+                columns: new[] { "Id", "Name", "ParentCategoryId" },
+                values: new object[,]
+                {
+                    { 1, "Фестиваль", null },
+                    { 3, "Концерт", null },
+                    { 5, "Поход в кино", null },
+                    { 6, "Конференция", null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "Age", "Email", "Gender", "MyProperty", "Name", "PhoneNumber" },
+                values: new object[,]
+                {
+                    { 1, 21, "testmail@gmail.com", 0, 0, "Анатолий", "+71234567890" },
+                    { 2, 45, "testmail1@gmail.com", 0, 0, "Евгений", "+71234567891" },
+                    { 3, 32, "testmail2@gmail.com", 1, 0, "Анастасия", "+71234567892" },
+                    { 4, 15, "testmail3@gmail.com", 1, 0, "Валентина", "+71234567893" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "CommercialEvents",
+                columns: new[] { "Id", "CommercialEventId", "CreatorId", "Price", "UserEventId" },
+                values: new object[,]
+                {
+                    { 3, null, 5, 0m, null },
+                    { 4, null, 6, 0m, null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "EventCategories",
+                columns: new[] { "Id", "Name", "ParentCategoryId" },
+                values: new object[,]
+                {
+                    { 2, "Фестиваль волонтеров", 1 },
+                    { 4, "Праздничный концерт", 3 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "UserEvents",
+                columns: new[] { "Id", "CreatorId", "UserEventId" },
+                values: new object[,]
+                {
+                    { 1, 1, null },
+                    { 2, 3, null }
                 });
 
             migrationBuilder.CreateIndex(
@@ -216,9 +289,9 @@ namespace EventManagerService.Infrastructure.Migrations
                 column: "CommercialEventId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CommercialEvents_CommercialUserId",
+                name: "IX_CommercialEvents_CreatorId",
                 table: "CommercialEvents",
-                column: "CommercialUserId");
+                column: "CreatorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CommercialEvents_UserEventId",
@@ -231,14 +304,14 @@ namespace EventManagerService.Infrastructure.Migrations
                 column: "ParentCategoryId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_UserEvents_CreatorId",
+                table: "UserEvents",
+                column: "CreatorId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserEvents_UserEventId",
                 table: "UserEvents",
                 column: "UserEventId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserEvents_UserId",
-                table: "UserEvents",
-                column: "UserId");
         }
 
         /// <inheritdoc />

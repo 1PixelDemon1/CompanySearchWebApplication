@@ -6,7 +6,7 @@ namespace EventManagerService.Application.Queries.GetCommercialEventsByEventCate
     {
         public GetCommercialEventsByEventCategoryQueryValidator()
         {
-            RuleFor(command => command.EventCategoryId).GreaterThan(0);
+            RuleFor(query => query.EventCategoryId).GreaterThan(0);
         }
     }
 }

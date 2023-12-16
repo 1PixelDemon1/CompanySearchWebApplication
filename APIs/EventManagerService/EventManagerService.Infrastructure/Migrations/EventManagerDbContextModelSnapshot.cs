@@ -123,6 +123,20 @@ namespace EventManagerService.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CommercialUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 5,
+                            Name = "VIMers corp",
+                            PersonalAccount = "70ББ000584"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Банк Пеньков",
+                            PersonalAccount = "70ББ000585"
+                        });
                 });
 
             modelBuilder.Entity("EventManagerService.Domain.Entities.EventCategory", b =>
@@ -145,6 +159,40 @@ namespace EventManagerService.Infrastructure.Migrations
                     b.HasIndex("ParentCategoryId");
 
                     b.ToTable("EventCategories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Фестиваль"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Фестиваль волонтеров",
+                            ParentCategoryId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Концерт"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Праздничный концерт",
+                            ParentCategoryId = 3
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Поход в кино"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Конференция"
+                        });
                 });
 
             modelBuilder.Entity("EventManagerService.Domain.Entities.User", b =>
@@ -177,6 +225,48 @@ namespace EventManagerService.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Age = 21,
+                            Email = "testmail@gmail.com",
+                            Gender = 0,
+                            MyProperty = 0,
+                            Name = "Анатолий",
+                            PhoneNumber = "+71234567890"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Age = 45,
+                            Email = "testmail1@gmail.com",
+                            Gender = 0,
+                            MyProperty = 0,
+                            Name = "Евгений",
+                            PhoneNumber = "+71234567891"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Age = 32,
+                            Email = "testmail2@gmail.com",
+                            Gender = 1,
+                            MyProperty = 0,
+                            Name = "Анастасия",
+                            PhoneNumber = "+71234567892"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Age = 15,
+                            Email = "testmail3@gmail.com",
+                            Gender = 1,
+                            MyProperty = 0,
+                            Name = "Валентина",
+                            PhoneNumber = "+71234567893"
+                        });
                 });
 
             modelBuilder.Entity("EventManagerService.Domain.Entities.CommercialEvent", b =>
@@ -186,7 +276,7 @@ namespace EventManagerService.Infrastructure.Migrations
                     b.Property<int?>("CommercialEventId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("CreatorId")
+                    b.Property<int>("CreatorId")
                         .HasColumnType("integer");
 
                     b.Property<decimal>("Price")
@@ -202,13 +292,51 @@ namespace EventManagerService.Infrastructure.Migrations
                     b.HasIndex("UserEventId");
 
                     b.ToTable("CommercialEvents", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 3,
+                            CreateTime = new DateTime(2023, 12, 16, 20, 46, 23, 120, DateTimeKind.Local).AddTicks(1825),
+                            DeadLine = new DateTime(2023, 12, 21, 20, 46, 23, 120, DateTimeKind.Local).AddTicks(1826),
+                            Description = "Проведение публичной конференции",
+                            EventDateTime = new DateTime(2023, 12, 22, 20, 46, 23, 120, DateTimeKind.Local).AddTicks(1826),
+                            EventDuration = new TimeSpan(0, 2, 0, 0, 0),
+                            GenderRules = 0,
+                            Location = "г.Магнитогорск пр.Ленина д.130",
+                            MaxAge = -1,
+                            MaxUsers = -1,
+                            MinAge = 18,
+                            MinUsers = 20,
+                            UpdateTime = new DateTime(2023, 12, 16, 20, 46, 23, 120, DateTimeKind.Local).AddTicks(1825),
+                            CreatorId = 5,
+                            Price = 0m
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreateTime = new DateTime(2023, 12, 16, 20, 46, 23, 120, DateTimeKind.Local).AddTicks(1830),
+                            DeadLine = new DateTime(2023, 12, 31, 20, 46, 23, 120, DateTimeKind.Local).AddTicks(1831),
+                            Description = "Проведение IT - конференции",
+                            EventDateTime = new DateTime(2024, 1, 1, 20, 46, 23, 120, DateTimeKind.Local).AddTicks(1831),
+                            EventDuration = new TimeSpan(0, 2, 30, 0, 0),
+                            GenderRules = 0,
+                            Location = "г.Магнитогорск пр.Ленина д.130",
+                            MaxAge = -1,
+                            MaxUsers = -1,
+                            MinAge = 18,
+                            MinUsers = 0,
+                            UpdateTime = new DateTime(2023, 12, 16, 20, 46, 23, 120, DateTimeKind.Local).AddTicks(1830),
+                            CreatorId = 6,
+                            Price = 0m
+                        });
                 });
 
             modelBuilder.Entity("EventManagerService.Domain.Entities.UserEvent", b =>
                 {
                     b.HasBaseType("EventManagerService.Domain.Entities.BaseEntities.BaseEvent");
 
-                    b.Property<int?>("CreatorId")
+                    b.Property<int>("CreatorId")
                         .HasColumnType("integer");
 
                     b.Property<int?>("UserEventId")
@@ -219,6 +347,42 @@ namespace EventManagerService.Infrastructure.Migrations
                     b.HasIndex("UserEventId");
 
                     b.ToTable("UserEvents", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreateTime = new DateTime(2023, 12, 16, 20, 46, 23, 120, DateTimeKind.Local).AddTicks(1783),
+                            DeadLine = new DateTime(2023, 12, 26, 20, 46, 23, 120, DateTimeKind.Local).AddTicks(1792),
+                            Description = "Посещение кинотеатра Джаз.Синема для просмотра фильма \"Человек паук 6\"",
+                            EventDateTime = new DateTime(2023, 12, 27, 20, 46, 23, 120, DateTimeKind.Local).AddTicks(1797),
+                            EventDuration = new TimeSpan(0, 2, 56, 0, 0),
+                            GenderRules = 0,
+                            Location = "г.Магнитогорск ул.Герцена д.6",
+                            MaxAge = -1,
+                            MaxUsers = 80,
+                            MinAge = 16,
+                            MinUsers = 1,
+                            UpdateTime = new DateTime(2023, 12, 16, 20, 46, 23, 120, DateTimeKind.Local).AddTicks(1792),
+                            CreatorId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreateTime = new DateTime(2023, 12, 16, 20, 46, 23, 120, DateTimeKind.Local).AddTicks(1804),
+                            DeadLine = new DateTime(2023, 12, 26, 20, 46, 23, 120, DateTimeKind.Local).AddTicks(1805),
+                            Description = "Посещение кинотеатра Джаз.Синема для просмотра фильма \"Человек паук 6\", посещение фестиваля после",
+                            EventDateTime = new DateTime(2023, 12, 27, 20, 46, 23, 120, DateTimeKind.Local).AddTicks(1806),
+                            EventDuration = new TimeSpan(0, 9, 36, 0, 0),
+                            GenderRules = 0,
+                            Location = "г.Магнитогорск пр.Ленина д.72",
+                            MaxAge = -1,
+                            MaxUsers = 80,
+                            MinAge = 16,
+                            MinUsers = 1,
+                            UpdateTime = new DateTime(2023, 12, 16, 20, 46, 23, 120, DateTimeKind.Local).AddTicks(1805),
+                            CreatorId = 3
+                        });
                 });
 
             modelBuilder.Entity("BaseEventEventCategory", b =>
@@ -268,7 +432,9 @@ namespace EventManagerService.Infrastructure.Migrations
 
                     b.HasOne("EventManagerService.Domain.Entities.CommercialUser", "Creator")
                         .WithMany("CommercialEvents")
-                        .HasForeignKey("CreatorId");
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("EventManagerService.Domain.Entities.BaseEntities.BaseEvent", null)
                         .WithOne()
@@ -287,7 +453,9 @@ namespace EventManagerService.Infrastructure.Migrations
                 {
                     b.HasOne("EventManagerService.Domain.Entities.User", "Creator")
                         .WithMany("UserEvents")
-                        .HasForeignKey("CreatorId");
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("EventManagerService.Domain.Entities.BaseEntities.BaseEvent", null)
                         .WithOne()

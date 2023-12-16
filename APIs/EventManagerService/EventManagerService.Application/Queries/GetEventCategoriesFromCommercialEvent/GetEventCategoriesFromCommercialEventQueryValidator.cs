@@ -11,7 +11,7 @@ namespace EventManagerService.Application.Queries.GetEventCategoriesFromCommerci
     {
         public GetEventCategoriesFromCommercialEventQueryValidator()
         {
-            RuleFor(command => command.CommercialEventId).GreaterThan(0);
+            RuleFor(query => query.CommercialEventId).GreaterThan(0);
         }
     }
 }

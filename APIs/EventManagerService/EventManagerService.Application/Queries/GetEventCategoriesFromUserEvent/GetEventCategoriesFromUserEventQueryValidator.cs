@@ -11,7 +11,7 @@ namespace EventManagerService.Application.Queries.GetEventCategoriesFromUserEven
     {
         public GetEventCategoriesFromUserEventQueryValidator()
         {
-            RuleFor(command => command.UserEventId).GreaterThan(0);
+            RuleFor(query => query.UserEventId).GreaterThan(0);
         }
     }
 }

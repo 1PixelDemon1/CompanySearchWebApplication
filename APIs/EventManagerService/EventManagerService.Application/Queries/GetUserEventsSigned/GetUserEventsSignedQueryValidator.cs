@@ -11,7 +11,7 @@ namespace EventManagerService.Application.Queries.GetUserEventsSigned
     {
         public GetUserEventsSignedQueryValidator()
         {
-            RuleFor(command => command.UserId).GreaterThan(0);
+            RuleFor(query => query.UserId).GreaterThan(0);
         }
     }
 }

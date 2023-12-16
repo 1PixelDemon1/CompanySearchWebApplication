@@ -2,6 +2,8 @@
 using EventManagerService.API.Config;
 using EventManagerService.Application;
 using EventManagerService.Infrastructure;
+using EventManagerService.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace EventManagerService.API
 {
@@ -34,7 +36,22 @@ namespace EventManagerService.API
 
             app.MapControllers();
 
+            ApplyMigration(app);
+
             app.Run();
+        }
+
+        public static void ApplyMigration(WebApplication app)
+        {
+            using (var scope = app.Services.CreateScope())
+            {
+                var _db = scope.ServiceProvider.GetRequiredService<EventManagerDbContext>();
+
+                if (_db.Database.GetPendingMigrations().Count() > 0)
+                {
+                    _db.Database.Migrate();
+                }
+            }
         }
     }
 }
