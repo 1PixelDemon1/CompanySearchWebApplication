@@ -23,7 +23,7 @@
 ## Тестирование
 После запуска контейнеров на localhost по порту 80 будет работать web api, работу с которой можно протестировать при помощи swagger на странице:
 
-    https://localhost/swagger/index.html
+    http://localhost/swagger/index.html
 ## English
 The web application is designed to search for a company for various events. User events and commercial events can be added to the application, and other users can be signed to the event.
 Commercial and user events can link to each other: for example, several different people can search for a company at once for the commercial event "Cheese Quiz" – there will be several user events, and one user event may include several commercial and user events (first we go to the cinema, then to the bar).
@@ -45,4 +45,4 @@ To deploy the app you have to install [Docker](https://www.docker.com/).
 ## Testing
 When containers are launched the web api will work on localhost port 80, which can be tested using swagger on this page:
 
-    https://localhost/swagger/index.html
+    http://localhost/swagger/index.html
