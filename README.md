@@ -14,7 +14,7 @@
 ## Развертывание
 
 Для того, чтобы развернуть приложение необходимо установить [Docker](https://www.docker.com/).
-* Затем необходимо установить файл [docker-compose.yaml](docker-compose.yaml) из репозитория.
+* Затем необходимо установить файл [docker-compose.yaml](https://github.com/1PixelDemon1/CompanySearchWebApplication/blob/main/docker-compose.yml) из репозитория.
 * По расположению файла запустить контейнеры docker при помощи следующей консольной команды:
 ```bash
   docker-compose up
@@ -36,7 +36,7 @@ Application is build on a clean architecture using following patterns:
 ## Deployment
 
 To deploy the app you have to install [Docker](https://www.docker.com/).
-* Then you need to download [docker-compose.yaml](docker-compose.yaml) from this repo.
+* Then you need to download [docker-compose.yaml](https://github.com/1PixelDemon1/CompanySearchWebApplication/blob/main/docker-compose.yml) from this repo.
 * By file location, launch docker containers using the following console command:
 ```bash
   docker-compose up
